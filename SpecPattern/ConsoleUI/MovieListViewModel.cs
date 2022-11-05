@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Logic.Movies;
 
 namespace ConsoleUI;
@@ -11,6 +12,7 @@ public class MovieListViewModel
     public IReadOnlyList<Movie> Movies { get; private set; }
     
     public bool ForKidsOnly { get; set; }
+    public bool OnCD { get; set; }
 
     public MovieListViewModel()
     {
@@ -20,14 +22,49 @@ public class MovieListViewModel
         //BuyTicketCommand = new Command<Guid>(BuyTicket);
     }
     
-    private void BuyTicket(Guid movieGuid)
+    private void BuyChildTicket(Guid movieGuid)
     {
-        // MessageBox.Show("You've bought a ticket");
+        Movie movie = _repository.GetOne(movieGuid);
+        if (movie == null)
+        {
+            return;
+        }
+
+        var specification = new MovieForKidsSpecification();
+
+        if (!specification.IsSatisfiedBy(movie))
+        {
+            //The movie isn't suitable for children ERROR
+            return;
+        }
+        
+        // Proceed buying ticket
     }
 
-    private void Search(bool forKidsOnly)
+    private void BuyCD(Guid movieGuid)
     {
-        Movies = _repository.GetList(forKidsOnly);
+        Movie movie = _repository.GetOne(movieGuid);
+        if (movie == null)
+        {
+            return;
+        }
+
+        var specification = new AvailableOnCdSpecification();
+        
+        if (!specification.IsSatisfiedBy(movie))
+        {
+            // The movie doesn't have a CD version ERROR
+            return;
+        }
+        
+        // Proceed buying CD
+    }
+
+    private void Search()
+    {
+        var specification = new MovieForKidsSpecification();
+        Movies = _repository.GetList(specification);
+
         //Notify(nameof(Movies);
     }
     
