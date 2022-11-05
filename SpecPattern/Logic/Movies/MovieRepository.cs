@@ -8,9 +8,11 @@ public class MovieRepository
         return null;
     }
 
-    public IReadOnlyList<Movie> GetList()
+    public IReadOnlyList<Movie> GetList(bool forKidsOnly)
     {
         //TODO: to be implemented;
-        return new List<Movie>();
+        return new List<Movie>()
+            .Where(movie => movie.MpaaRating <= MpaaRating.PG || !forKidsOnly)
+            .ToList();
     }
 }
