@@ -13,6 +13,7 @@ public class MovieListViewModel
     
     public bool ForKidsOnly { get; set; }
     public bool OnCD { get; set; }
+    public MpaaRating MinimumRating { get; set; }
 
     public MovieListViewModel()
     {
@@ -62,8 +63,25 @@ public class MovieListViewModel
 
     private void Search()
     {
-        var specification = new MovieForKidsSpecification();
-        Movies = _repository.GetList(specification);
+        // var forKids = new MovieForKidsSpecification();
+        // var onCD = new AvailableOnCdSpecification();
+        // Specification<Movie> specification = onCD.And(forKids.Not());
+
+        Specification<Movie> specification = Specification<Movie>.All;
+
+        if (ForKidsOnly)
+        {
+            specification = specification.And(new MovieForKidsSpecification());
+        }
+
+        if (OnCD)
+        {
+            specification = specification.And(new AvailableOnCdSpecification());
+        }
+        
+        Movies = _repository.GetList(
+            specification,
+            MinimumRating);
 
         //Notify(nameof(Movies);
     }

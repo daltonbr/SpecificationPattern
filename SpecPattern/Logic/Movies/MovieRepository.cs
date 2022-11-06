@@ -10,12 +10,19 @@ public class MovieRepository
         return null;
     }
 
-    public IReadOnlyList<Movie> GetList(Specification<Movie> specification)
+    public IReadOnlyList<Movie> GetList(
+        Specification<Movie> specification,
+        double minimumRating,
+        int page = 0,
+        int pageSize = 4)
     {
         //TODO: to be implemented;
         return new List<Movie>()
             .AsQueryable()
             .Where(specification.ToExpression())
+            .Where(x => x.Rating >= minimumRating)
+            .Skip(page * pageSize)
+            .Take(pageSize)
             .ToList();
     }
     

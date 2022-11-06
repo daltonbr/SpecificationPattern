@@ -9,6 +9,7 @@ public class Movie : Entity
     public MpaaRating MpaaRating { get; }
     public string Genre { get; }
     public double Rating { get; }
+    public Director Director { get; }
 
     protected Movie()
     {
