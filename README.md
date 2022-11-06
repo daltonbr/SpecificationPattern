@@ -1,5 +1,10 @@
 # Specification Pattern
 
+Based on the [Plural Sight course Specification Pattern in C#](https://app.pluralsight.com/library/courses/csharp-specification-pattern)
+by Vladimir Khorikov [@vkhoriko](https://twitter.com/vkhorikov)
+
+Source Code from author [github.com/vkhorikov/SpecPattern](https://github.com/vkhorikov/SpecPattern)
+
 ## Introduction
 
 What is?
@@ -266,7 +271,3 @@ By default all navigation properties are lazy loaded - when the client code firs
 - When not to use the Specification pattern
 - Combining specifications with regular filtration
 - Creation of new objects
-
-## Resource List
-
-https://github.com/vkhorikov/SpecPattern
